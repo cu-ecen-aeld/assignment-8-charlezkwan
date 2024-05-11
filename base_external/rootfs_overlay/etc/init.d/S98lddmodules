@@ -1,0 +1,22 @@
+#!/bin/sh
+cd /lib/modules/$(uname -r)/extra
+
+case "$1" in
+start)
+    echo "Loading kernel modules..."
+    module_load faulty
+    modprobe hello
+    scull_load
+    ;;
+stop)
+    echo "Unloading kernel modules..."
+    scull_unload
+    rmmod hello
+    module_unload faulty
+    ;;
+*)
+    echo "Usage: $0 {start|stop}"
+    exit 1
+esac
+
+exit 0
